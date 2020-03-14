@@ -6,6 +6,10 @@ process output to supervisor's stdout.
 This is useful in situations where the output will be collected and set to
 external logging framework, such as Heroku.
 
+## Credit
+
+This is a forked, modified version of the original [supervisor-stdout](https://github.com/coderanger/supervisor-stdout).
+
 ## Installation
 
 Just install via pip or add to your requirements.txt:
@@ -16,16 +20,22 @@ Just install via pip or add to your requirements.txt:
 
 An example supervisord.conf:
 
-    [supervisord]
-    nodaemon = true
+```ini
+[supervisord]
+nodaemon = true
 
-    [program:web]
-    command = ...
-    stdout_events_enabled = true
-    stderr_events_enabled = true
+[program:foo]
+command = ...
+stdout_events_enabled = true
+stderr_events_enabled = true
 
-    [eventlistener:stdout]
-    command = supervisor_stdout
-    buffer_size = 100
-    events = PROCESS_LOG
-    result_handler = supervisor_stdout:event_handler
+[eventlistener:stdout]
+command = supervisor_stdout
+environment = PYTHONUNBUFFERED=1
+buffer_size = 1024
+events = PROCESS_LOG
+result_handler = supervisor_stdout:event_handler
+stderr_logfile = NONE
+stdout_logfile = NONE
+```
+
