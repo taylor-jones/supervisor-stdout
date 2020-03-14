@@ -11,7 +11,7 @@ def write_stdout(message):
 
 def get_timestamp_to_milliseconds():
     now = datetime.datetime.now()
-    timestamp = now.strftime('%Y-%m-%d %H:%M:%S.%f')
+    timestamp = now.strftime('%Y-%m-%d %H:%M:%S,%f')
     return timestamp[:-3]
 
 def main():
